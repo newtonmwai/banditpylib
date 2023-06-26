@@ -34,3 +34,7 @@ class TestEXP3:
                     Feedback(),
                 )
             )
+
+  @property
+  def best_arm(self) -> int:
+    return self.__best_arm

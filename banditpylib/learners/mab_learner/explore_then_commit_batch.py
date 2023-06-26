@@ -26,6 +26,7 @@ class ExploreThenCommitBatch(MABLearner):
         self.__T_prime = T_prime
         self.__best_arm: int = -1
         self.batch_prop = T_prime // arm_num
+        self.batch_modulo = T_prime % arm_num
 
     def _name(self) -> str:
         return "explore_then_commit"
@@ -40,13 +41,14 @@ class ExploreThenCommitBatch(MABLearner):
 
         actions = Actions()
         arm_pull = actions.arm_pulls.add()
-
-        if self.__time <= self.__T_prime:
+        if self.__time <= (self.__T_prime - self.batch_modulo):
             # arm_pull.arm.id = (self.__time - 1) % self.arm_num
-            arm_pull.arm.id = arm_pull.arm.id // self.batch_prop
+            arm_pull.arm.id = (self.__time - 1) // self.batch_prop
+
         else:
             arm_pull.arm.id = self.__best_arm
 
+        # print((self.__time - 1), arm_pull.arm.id)
         arm_pull.times = 1
         return actions
 
@@ -54,7 +56,7 @@ class ExploreThenCommitBatch(MABLearner):
         arm_feedback = feedback.arm_feedbacks[0]
         self.__pseudo_arms[arm_feedback.arm.id].update(np.array(arm_feedback.rewards))
         self.__time += 1
-        if self.__best_arm < 0 and self.__time > self.__T_prime:
+        if self.__best_arm < 0 and self.__time > (self.__T_prime - self.batch_modulo):
             self.__best_arm = argmax_or_min_tuple(
                 [
                     (self.__pseudo_arms[arm_id].em_mean, arm_id)
