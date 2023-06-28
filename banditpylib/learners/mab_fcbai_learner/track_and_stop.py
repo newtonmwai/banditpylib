@@ -30,16 +30,13 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
         arm_num: int,
         confidence: float,
         max_pulls: int = 1000,
-        forced_exp_pulls: int = 1,
-        std: float = 1.0,
         tracking_rule: str = "D",
         name: Optional[str] = None,
     ):
         super().__init__(arm_num=arm_num, confidence=confidence, name=name)
         self.tracking_rule = tracking_rule
         self.__max_pulls = max_pulls
-        self.__forced_exp_pulls = forced_exp_pulls
-        self.__std = std
+        self.__eps = 1e-32
 
     def _name(self) -> str:
         return "track_and_stop"
@@ -50,6 +47,13 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
         self.__total_pulls = 0
         self.__stage = "initialization"
         self.__stop = False
+        self.mu_hat = np.zeros(self.arm_num)
+
+        # self.__best_arm_id = 0
+        # self.__second_best_arm_id = 1
+        # self.Na_t = [(0.0, 0) for arm_id in range(self.arm_num)]
+        # self.__Na_t = [0 for arm_id in range(self.arm_num)]
+
         # self.__inf_wstar = None
         # self.__best_arm_id = None
         # self.__second_best_arm_id = None
@@ -128,13 +132,15 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
     def beta(self):
         """Computes Threshold β(t, δ) = log((log(t) + 1)/δ)"""
         # return np.log(1 / (1 - self.confidence))
-        return np.log((np.log(self.__total_pulls) + 1) / (1 - self.confidence))
+        return np.log(
+            (np.log(self.__total_pulls + self.__eps) + 1.0) / (1.0 - self.confidence)
+        )
 
     def mu_hat_a_b(self, a, b):
         """Compute the weighted average of the empirical means of arms a and b"""
         return (
             ((self.mu_hat[a] * self.__Na_t[a]) + (self.mu_hat[b] * self.__Na_t[b]))
-        ) / (self.__Na_t[a] + self.__Na_t[b])
+        ) / (self.__Na_t[a] + self.__Na_t[b] + self.__eps)
 
     def Z_a_b(self):
         Z_a_b = np.array(
@@ -170,33 +176,73 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
 
     def actions(self, context: Context) -> Actions:
         if self.tracking_rule == "D":
-            # print("Stage: ", self.__stage)
             # print("Total pulls: ", self.__total_pulls)
             # print("Max pulls: ", self.__max_pulls)
             # print("Tracking rule: ", "D")
 
+            actions = Actions()
+
             # Forced exploration
-            if self.__stage == "initialization":
-                # print("Initialization")
-                actions = Actions()
-                for arm_id in range(self.arm_num):
-                    # print("Pulling arm ", arm_id)
-                    arm_pull = actions.arm_pulls.add()
-                    arm_pull.arm.id = arm_id
-                    arm_pull.times = self.__forced_exp_pulls
+            self.__best_arm_id = self.best_arm
+            self.__second_best_arm_id = self.second_best_arm
+
+            self.Na_t = [
+                (pseudo_arm.total_pulls, arm_id)
+                for (arm_id, pseudo_arm) in enumerate(self.__pseudo_arms)
+            ]
+
+            self.__Na_t = [
+                self.__pseudo_arms[arm_id].total_pulls for arm_id in range(self.arm_num)
+            ]
+
+            self.__stop = self.stop()
+            if self.__stop or self.__total_pulls >= self.__max_pulls:
                 return actions
+
+            # if self.__stage == "initialization":
+            self.__U_t = []
+            for arm_id in range(self.arm_num):
+                if (
+                    self.__pseudo_arms[arm_id].total_pulls
+                    < (np.sqrt(self.__total_pulls) - self.arm_num / 2)
+                    or self.__pseudo_arms[arm_id].total_pulls == 0
+                ):
+                    self.__U_t = [
+                        (pseudo_arm.total_pulls, arm_id)
+                        for (arm_id, pseudo_arm) in enumerate(self.__pseudo_arms)
+                    ]
+
+            if len(self.__U_t) > 0:
+                arm_pull = actions.arm_pulls.add()
+                arm_pull.arm.id = argmax_or_min_tuple(self.__U_t, True)
+                arm_pull.times = 1
+                return actions
+
+            # if self.__stage == "initialization":
+            #     # print("Initialization")
+            #     actions = Actions()
+            #     for arm_id in range(self.arm_num):
+            #         # print("Pulling arm ", arm_id)
+            #         arm_pull = actions.arm_pulls.add()
+            #         arm_pull.arm.id = arm_id
+            #         arm_pull.times = self.__forced_exp_pulls
+            #     return actions
 
             # Direct tracking
             # else:
-            self.__stage == "main"
-            actions = Actions()
+            # self.__stage == "main"
+            # actions = Actions()
 
             # 1. Compute mu_hat
-
             # print("Stop: ", self.__stop)
-
-            if self.__stop or self.__total_pulls >= self.__max_pulls:
-                return actions
+            self.mu_hat = np.array(
+                [
+                    self.__pseudo_arms[arm_id].em_mean
+                    for arm_id in range(self.arm_num)
+                    if self.__pseudo_arms[arm_id].total_pulls > 0
+                ]
+            )
+            # print("mu_hat: ", self.mu_hat)
 
             # print("mu_hat: ", self.mu_hat)
             # 2. Compute w_star
@@ -231,31 +277,38 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
             # print("Max pulls: ", self.__max_pulls)
             # print("Tracking rule: ", "C")
 
-            self.__stage == "main"
-            # print("Stage: ", self.__stage)
-
             actions = Actions()
 
-            self.__stop = self.stop()
-            # print("Stop: ", self.__stop)
+            # Forced exploration
+            self.__best_arm_id = self.best_arm
+            self.__second_best_arm_id = self.second_best_arm
 
+            self.Na_t = [
+                (pseudo_arm.total_pulls, arm_id)
+                for (arm_id, pseudo_arm) in enumerate(self.__pseudo_arms)
+            ]
+
+            self.__Na_t = [
+                self.__pseudo_arms[arm_id].total_pulls for arm_id in range(self.arm_num)
+            ]
+
+            self.__stop = self.stop()
             if self.__stop or self.__total_pulls >= self.__max_pulls:
                 return actions
-
             # 1. Compute mu_hat
-            mu_hat = np.array(
-                [
-                    self.__pseudo_arms[arm_id].em_mean
-                    if self.__pseudo_arms[arm_id].total_pulls > 0
-                    else 0
-                    for arm_id in range(self.arm_num)
-                ]
-            )
+            # mu_hat = np.array(
+            #     [
+            #         self.__pseudo_arms[arm_id].em_mean
+            #         if self.__pseudo_arms[arm_id].total_pulls > 0
+            #         else 0
+            #         for arm_id in range(self.arm_num)
+            #     ]
+            # )
 
             # print("mu_hat: ", mu_hat)
 
             # 2. Compute w_star
-            w_star = self.solve_wstar(mu_hat)
+            w_star = self.solve_wstar(self.mu_hat)
 
             # print("w_star: ", w_star)
 
@@ -296,41 +349,22 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
             )
             # Update tracking statistics here
             self.__total_pulls += len(arm_feedback.rewards)
-
-        self.mu_hat = np.array(
-            [self.__pseudo_arms[arm_id].em_mean for arm_id in range(self.arm_num)]
-        )
-
-        self.Na_t = [
-            (pseudo_arm.total_pulls, arm_id)
-            for (arm_id, pseudo_arm) in enumerate(self.__pseudo_arms)
-        ]
-
-        self.__Na_t = [
-            self.__pseudo_arms[arm_id].total_pulls for arm_id in range(self.arm_num)
-        ]
-
-        self.__best_arm_id = self.best_arm
-        self.__second_best_arm_id = self.second_best_arm
-        self.__stop = self.stop()
-
-        if self.__stage == "initialization":
-            self.__stage = "main"
+        # if self.__stage == "initialization":
+        #     self.__stage = "main"
 
     @property
     def best_arm(self) -> int:
         return argmax_or_min_tuple(
-            [
-                (pseudo_arm.em_mean, arm_id)
-                for (arm_id, pseudo_arm) in enumerate(self.__pseudo_arms)
-            ]
+            [(self.mu_hat[arm_id], arm_id) for arm_id in range(self.arm_num)]
         )
 
     @property
     def second_best_arm(self) -> int:
-        return argmax_or_min_tuple_second(
+        best_arm_id = self.best_arm
+        return argmax_or_min_tuple(
             [
-                (pseudo_arm.em_mean, arm_id)
-                for (arm_id, pseudo_arm) in enumerate(self.__pseudo_arms)
+                (self.mu_hat[arm_id], arm_id)
+                for arm_id in range(self.arm_num)
+                if arm_id != best_arm_id
             ]
         )
