@@ -18,8 +18,15 @@ class LilUCBHeuristic(MABFixedConfidenceBAILearner):
     :param Optional[str] name: alias name
     """
 
-    def __init__(self, arm_num: int, confidence: float, name: Optional[str] = None):
+    def __init__(
+        self,
+        arm_num: int,
+        confidence: float,
+        max_pulls: int,
+        name: Optional[str] = None,
+    ):
         super().__init__(arm_num=arm_num, confidence=confidence, name=name)
+        self.__max_pulls = max_pulls
 
     def _name(self) -> str:
         return "lilUCB_heur"
@@ -84,6 +91,9 @@ class LilUCBHeuristic(MABFixedConfidenceBAILearner):
                 1 + self.__a * (self.__total_pulls - pseudo_arm.total_pulls)
             ):
                 return actions
+
+        # if self.__total_pulls >= self.__max_pulls:
+        #     return actions
 
         arm_pull = actions.arm_pulls.add()
         arm_pull.arm.id = int(np.argmax(self.__ucb))
