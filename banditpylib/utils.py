@@ -172,3 +172,28 @@ def remove_array_item_(array, index):
 
 def remove_tuple_element_(lst, key):
     return [item for item in lst if item[1] != key]
+
+
+def round_robin(A, T, b, r):
+    """
+    A RoundRobin procedure to distribute arm pulls uniformly.
+
+    Args:
+    - A: a set of arms
+    - T: arm pull counts corresponding to the arms in A
+    - b: batch size
+    - r: repeated pull limit
+
+    Returns:
+    - a: pull count vector for the arms
+    """
+
+    a = [(arm_id, 0) for arm_id in A]
+
+    for _ in range(min(b, len(A) * r)):
+        j = np.argmin([T[i] + a[i][1] if a[i][1] <= r else float("inf") for i in A])
+        lst = list(a[j])
+        lst[1] += 1
+        a[j] = tuple(lst)
+
+    return a
