@@ -139,6 +139,43 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
 
         return w_star
 
+    def solve_wstar_with_penalty(self, mu, rho=0.0):
+        def objective(y):
+            # Compute w for the given y
+            w = np.array([self.xa(y, mu, a) for a in range(self.arm_num)]).squeeze()
+            w_normalized = np.array(w) / sum(w)
+
+            # Original objective
+            original_obj = np.abs(self.F_mu(y, mu) - 1)
+
+            # L1 sparsity penalty
+            l1_penalty = rho * np.sum(np.abs(w_normalized))
+
+            # L1 sparsity penalty with rho scaling
+            # We exponentiate rho to make the penalty extremely large as rho approaches 1
+            l1_penalty = (10 ** ((rho * 10) - 1)) * np.sum(np.abs(w_normalized))
+
+            return original_obj + l1_penalty
+
+        bounds = [
+            (0, kl_divergence(mu[self.__best_arm_id], mu[self.__second_best_arm_id]))
+        ]
+
+        result = minimize(
+            objective,
+            x0=kl_divergence(mu[self.__best_arm_id], mu[self.__second_best_arm_id]) / 2,
+            bounds=bounds,
+            method="SLSQP",
+        )
+
+        y_star = result.x[0]
+        w_star = np.array(
+            [self.xa(y_star, mu, a) for a in range(self.arm_num)]
+        ).squeeze()
+        w_star = np.array(w_star) / sum(w_star)
+
+        return w_star
+
     def beta(self):
         """Computes Threshold β(t, δ) = log((log(t) + 1)/δ)"""
         return np.log((np.log(self.__total_pulls) + 1.0) / (1.0 - self.confidence))
