@@ -10,3 +10,5 @@ build/
 dist/
 *pytest.log
 .mypy_cache/
+.examples/csv_files/*
+.examples/logs/*

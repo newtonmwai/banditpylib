@@ -1,6 +1,9 @@
-from typing import Optional
+from typing import Optional, Union
 
 import numpy as np
+
+# import random
+import random
 
 from banditpylib import argmax_or_min_tuple, round_robin
 from banditpylib.arms import PseudoArm
@@ -49,7 +52,8 @@ class BatchRacing(MABFixedConfidenceBAILearner):
     def reset(self):
         self.__pseudo_arms = [PseudoArm() for arm_id in range(self.arm_num)]
         self.__total_pulls = 0
-        self.S = set(range(self.arm_num))
+        self.S = set(random.sample(range(self.arm_num), k=self.arm_num))
+
         self.R = set()
         self.A = set()
         self.omega = np.sqrt((1 - self.confidence) / (6 * self.arm_num))
@@ -72,15 +76,14 @@ class BatchRacing(MABFixedConfidenceBAILearner):
         return np.sqrt(4 * np.log(np.log2(2 * tau) / omega) / tau)
 
     def actions(self, context: Context) -> Actions:
+        actions = Actions()
         if self.__total_pulls >= self.__max_pulls:
-            actions = Actions()
             return actions
 
         if len(self.A) < self.__k:
-            actions = Actions()
             __a = round_robin(
                 self.S,
-                [self.__pseudo_arms[i].total_pulls for i in self.S],
+                [(i, self.__pseudo_arms[i].total_pulls) for i in self.S],
                 self.__b,
                 self.__r,
             )
@@ -93,7 +96,6 @@ class BatchRacing(MABFixedConfidenceBAILearner):
                 arm_pull.times = __arm[1]
             return actions
         else:
-            actions = Actions()
             # for arm_id in self.A:
             #     print("arm_id: ", arm_id)
             #     arm_pull = actions.arm_pulls.add()
@@ -102,6 +104,7 @@ class BatchRacing(MABFixedConfidenceBAILearner):
             # arm_pull = actions.arm_pulls.add()
             # arm_pull.arm.id = [arm_id for arm_id in self.A][0]
             # arm_pull.times = 1
+            # print("Best arm: ", self.best_arm)
             return actions
 
     def update(self, feedback: Feedback):
@@ -122,7 +125,7 @@ class BatchRacing(MABFixedConfidenceBAILearner):
                 or len(self.S) <= self.__k
             ):
                 A_next.add(i)
-                print("A_next: ", A_next)
+                # print("A_next: ", A_next)
 
         R_next = self.R.copy()
         for i in self.S:
@@ -130,7 +133,7 @@ class BatchRacing(MABFixedConfidenceBAILearner):
                 [self.__lcb[j] for j in self.S if j not in R_next][:k_t]
             ):
                 R_next.add(i)
-                print("R_next: ", R_next)
+                # print("R_next: ", R_next)
 
         self.S = self.S - A_next - R_next
         self.A = A_next
@@ -140,10 +143,11 @@ class BatchRacing(MABFixedConfidenceBAILearner):
         #     self.__stage = "main"
 
     @property
-    def best_arm(self) -> int:
+    def best_arm(self) -> int:  # Union[int, list]:
         return argmax_or_min_tuple(
             [
                 (pseudo_arm.total_pulls, arm_id)
                 for (arm_id, pseudo_arm) in enumerate(self.__pseudo_arms)
             ]
         )
+        # return list(self.A)

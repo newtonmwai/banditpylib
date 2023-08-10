@@ -1,0 +1,2 @@
+/tmp/slurmd/job1228986/slurm_script: line 17: load_modules.sh: No such file or directory
+/tmp/slurmd/job1228986/slurm_script: line 19: python: command not found

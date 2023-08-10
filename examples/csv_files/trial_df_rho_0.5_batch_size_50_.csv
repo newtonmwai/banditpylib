@@ -1,0 +1,16 @@
+rounds,total_actions,regret,other,bandit,learner
+100,4110,0.0,0.0,multi_armed_bandit,BatchRacing
+84,3580,0.0,0.0,multi_armed_bandit,BatchRacing
+102,4280,0.0,0.0,multi_armed_bandit,BatchRacing
+114,4800,0.0,0.0,multi_armed_bandit,BatchRacing
+130,5370,0.0,0.0,multi_armed_bandit,BatchRacing
+24,1200,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+26,1300,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+28,1400,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+240,12000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+1000,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+376,379,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+993,996,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1024,1027,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1060,1063,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1263,1266,0.0,0.0,multi_armed_bandit,Heuristic lilUCB

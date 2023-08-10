@@ -189,11 +189,15 @@ def round_robin(A, T, b, r):
     """
 
     a = [(arm_id, 0) for arm_id in A]
-
+    a = {key: value for key, value in a}
+    T = {key: value for key, value in T}
+    # print("a", a)
     for _ in range(min(b, len(A) * r)):
-        j = np.argmin([T[i] + a[i][1] if a[i][1] <= r else float("inf") for i in A])
-        lst = list(a[j])
-        lst[1] += 1
-        a[j] = tuple(lst)
+        j = np.argmin([T[i] + a[i] if a[i] <= r else float("inf") for i in A])
+        if j in A:
+            # lst = list(a[j])
+            a[j] += 1
+            # a[j] = tuple(lst)
 
-    return a
+    # print("a", a)
+    return list(a.items())
