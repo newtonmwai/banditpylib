@@ -57,13 +57,41 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
         self.__Na_t = list(np.zeros(self.arm_num))
 
     # L∞ projection of w_star onto Σ_K with ε = (K^2 + t)^(-1/2)
-    def l_inf_projection(self, w_star):
+    def linf_projection(self, w_star):
+        # Clip the values of w to the interval [epsilon, 1]
         epsilon = (self.arm_num**2 + self.__total_pulls) ** (
             -1 / 2
         )  # Compute epsilon
-        projection = np.clip(w_star, 0, epsilon)  # Apply element-wise clipping
-        projection = projection / np.sum(projection)
-        return projection
+
+        w_proj = np.clip(w_star, epsilon, 1)
+
+        # Calculate discrepancy
+        discrepancy = 1 - np.sum(w_proj)
+
+        # While we have a discrepancy to distribute
+        while (
+            abs(discrepancy) > 1e-8
+        ):  # A small threshold to prevent endless loop due to floating point errors
+            # Find components that can be adjusted
+            adjustable_indices = np.where(
+                (w_proj > epsilon) & (w_proj + discrepancy / self.arm_num > epsilon)
+            )[0]
+
+            if len(adjustable_indices) == 0:
+                # If no components can be adjusted, distribute discrepancy equally and break
+                w_proj += discrepancy / self.arm_num
+                break
+
+            # Calculate amount to distribute per adjustable component
+            per_component_discrepancy = discrepancy / len(adjustable_indices)
+
+            # Distribute among the adjustable components
+            w_proj[adjustable_indices] += per_component_discrepancy
+
+            # Recalculate discrepancy
+            discrepancy = 1 - np.sum(w_proj)
+
+        return w_proj
 
     # Define the function ga(x)
     def ga(self, x, mu, a):
@@ -214,6 +242,7 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
         """Stop the algorithm if the stopping condition is satisfied"""
         __Z_a_b = self.Z_a_b()
         __beta = self.beta()
+        
         # print("Z_a_b: ", __Z_a_b)
         # print("Beta: ", __beta)
         return np.min(np.array(__Z_a_b)) > __beta
@@ -267,11 +296,12 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
 
             # Compute w_star
             w_star = self.solve_wstar(self.mu_hat)
+            # if self.__total_pulls == 0:
+            # print("w_star: ", w_star)
 
-            if self.__total_pulls == 0:
-                print("w_star: ", w_star)
+            inf_wstar = self.linf_projection(w_star)
+            # print("inf_wstar: ", inf_wstar)
 
-            inf_wstar = self.l_inf_projection(w_star)
             inf_wstar = [(inf_wstar[a], a) for a in range(self.arm_num)]
 
             if self.__total_pulls == 0:

@@ -1,3 +1,0 @@
-/tmp/slurmd/job1229269/slurm_script: line 19: call: command not found
-usage: experiments.py [-h] [-r RHO] [-b BATCH_SIZE]
-experiments.py: error: argument -r/--rho: expected one argument

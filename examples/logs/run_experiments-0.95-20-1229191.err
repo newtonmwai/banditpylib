@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/experiments.py", line 10, in <module>
-    import matplotlib.pyplot as plt
-ModuleNotFoundError: No module named 'matplotlib'

@@ -34,19 +34,20 @@ from banditpylib.utils import (
 )
 
 
-def main(rho=0.5, batch_size=20):
+def main(rho=0.5, batch_size=50, _means="m1"):
     confidence = 0.95
-    means = [0.7, 0.4, 0.1]
+    means_dict = {
+        "m1": [0.7, 0.4, 0.1],
+        "m2": [0.9, 0.7, 0.4, 0.1],
+        "m3": [0.9, 0.7, 0.5, 0.4, 0.45, 0.4, 0.3, 0.2],
+    }
+
+    means = means_dict[_means]
     max_pulls = 50000
     std = 1
-    batch_size = 20
-    rho = 0.5
 
-    # batch_sizes = [20, 50, 100, 500, 1000]
-    # rhos= [0.05, 0.25, 0.5, 0.75, 0.95]
+    print("rho=", rho, "batch_size=", batch_size, "means=", means)
 
-    # for batch_size in batch_sizes:
-    #     for rho in rhos:
     arms = [GaussianArm(mu=mean, std=std) for mean in means]
     bandit = MultiArmedBandit(arms=arms)
     learners = [
@@ -75,8 +76,13 @@ def main(rho=0.5, batch_size=20):
             max_pulls=max_pulls,
             name="Heuristic lilUCB",
         )
-        # TrackAndStop(arm_num=len(arms), confidence=confidence, tracking_rule="C",
-        #             max_pulls=max_pulls,  name='Track and stop C-Tracking'),
+        # TrackAndStop(
+        #     arm_num=len(arms),
+        #     confidence=confidence,
+        #     tracking_rule="C",
+        #     max_pulls=max_pulls,
+        #     name="Track and stop C-Tracking",
+        # )
         # TrackAndStop(arm_num=len(arms), confidence=confidence, tracking_rule="D",
         #             max_pulls=max_pulls,  name='Track and stop D-Tracking')
     ]
@@ -92,7 +98,9 @@ def main(rho=0.5, batch_size=20):
 
     trials_df = trials_to_dataframe(temp_file.name)
     trials_df.to_csv(
-        "csv_files/trial_df_rho_"
+        "csv_files/trial_df_means_"
+        + str(_means)
+        + "_rho_"
         + str(rho)
         + "_batch_size_"
         + str(batch_size)
@@ -104,8 +112,7 @@ def main(rho=0.5, batch_size=20):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run rho experiments")
     parser.add_argument("-r", "--rho", type=float, default=0.5, dest="rho")
-
-    parser.add_argument("-b", "--batch_size", type=int, default=20, dest="batch_size")
-
+    parser.add_argument("-b", "--batch_size", type=int, default=50, dest="batch_size")
+    parser.add_argument("-m", "--means", type=str, default="m1", dest="means")
     args = parser.parse_args()
-    main(rho=float(args.rho), batch_size=int(args.batch_size))
+    main(rho=float(args.rho), batch_size=int(args.batch_size), _means=str(args.means))

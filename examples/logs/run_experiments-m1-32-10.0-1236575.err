@@ -1,0 +1,255 @@
+/tmp/slurmd/job1236575/slurm_script: line 24: workon: command not found
+INFO:absl:start BatchRacing's play with multi_armed_bandit
+INFO:absl:BatchRacing's play with multi_armed_bandit runs 0.41 seconds.
+INFO:absl:start Batch Track and stop C-Tracking's play with multi_armed_bandit
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/apps/Arch/software/SciPy-bundle/2021.05-foss-2021a/lib/python3.9/site-packages/scipy/optimize/_numdiff.py:579: RuntimeWarning: invalid value encountered in true_divide
+  J_transposed[i] = df / dx
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/apps/Arch/software/SciPy-bundle/2021.05-foss-2021a/lib/python3.9/site-packages/scipy/optimize/_numdiff.py:579: RuntimeWarning: invalid value encountered in true_divide
+  J_transposed[i] = df / dx
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/apps/Arch/software/SciPy-bundle/2021.05-foss-2021a/lib/python3.9/site-packages/scipy/optimize/_numdiff.py:579: RuntimeWarning: invalid value encountered in true_divide
+  J_transposed[i] = df / dx
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/apps/Arch/software/SciPy-bundle/2021.05-foss-2021a/lib/python3.9/site-packages/scipy/optimize/_numdiff.py:579: RuntimeWarning: invalid value encountered in true_divide
+  J_transposed[i] = df / dx
+/apps/Arch/software/SciPy-bundle/2021.05-foss-2021a/lib/python3.9/site-packages/scipy/optimize/_numdiff.py:579: RuntimeWarning: invalid value encountered in true_divide
+  J_transposed[i] = df / dx
+/apps/Arch/software/SciPy-bundle/2021.05-foss-2021a/lib/python3.9/site-packages/scipy/optimize/_numdiff.py:579: RuntimeWarning: invalid value encountered in true_divide
+  J_transposed[i] = df / dx
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:135: RuntimeWarning: invalid value encountered in double_scalars
+  kl_divergence(
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/apps/Arch/software/SciPy-bundle/2021.05-foss-2021a/lib/python3.9/site-packages/scipy/optimize/_numdiff.py:579: RuntimeWarning: invalid value encountered in true_divide
+  J_transposed[i] = df / dx
+/apps/Arch/software/SciPy-bundle/2021.05-foss-2021a/lib/python3.9/site-packages/scipy/optimize/_numdiff.py:579: RuntimeWarning: invalid value encountered in true_divide
+  J_transposed[i] = df / dx
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/apps/Arch/software/SciPy-bundle/2021.05-foss-2021a/lib/python3.9/site-packages/scipy/optimize/_numdiff.py:579: RuntimeWarning: invalid value encountered in true_divide
+  J_transposed[i] = df / dx
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+/apps/Arch/software/SciPy-bundle/2021.05-foss-2021a/lib/python3.9/site-packages/scipy/optimize/_numdiff.py:579: RuntimeWarning: invalid value encountered in true_divide
+  J_transposed[i] = df / dx
+/mimer/NOBACKUP/groups/snic2022-22-825/banditpylib/examples/../banditpylib/learners/mab_fcbai_learner/batch_track_and_stop.py:202: RuntimeWarning: invalid value encountered in double_scalars
+  return (
+slurmstepd: error: *** JOB 1236575 ON alvis3-33 CANCELLED AT 2023-08-14T13:32:16 ***

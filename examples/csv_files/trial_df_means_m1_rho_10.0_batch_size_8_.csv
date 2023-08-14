@@ -1,0 +1,301 @@
+rounds,total_actions,regret,other,bandit,learner
+239,1908,0.0,0.0,multi_armed_bandit,BatchRacing
+186,1484,0.0,0.0,multi_armed_bandit,BatchRacing
+193,1540,0.0,0.0,multi_armed_bandit,BatchRacing
+284,2268,0.0,0.0,multi_armed_bandit,BatchRacing
+263,2100,0.0,0.0,multi_armed_bandit,BatchRacing
+153,1220,0.0,0.0,multi_armed_bandit,BatchRacing
+92,732,0.0,0.0,multi_armed_bandit,BatchRacing
+200,1596,0.0,0.0,multi_armed_bandit,BatchRacing
+117,932,0.0,0.0,multi_armed_bandit,BatchRacing
+239,1908,0.0,0.0,multi_armed_bandit,BatchRacing
+212,1692,0.0,0.0,multi_armed_bandit,BatchRacing
+123,980,0.0,0.0,multi_armed_bandit,BatchRacing
+155,1236,0.0,0.0,multi_armed_bandit,BatchRacing
+113,900,0.0,0.0,multi_armed_bandit,BatchRacing
+351,2804,0.0,0.0,multi_armed_bandit,BatchRacing
+208,1660,0.0,0.0,multi_armed_bandit,BatchRacing
+160,1276,0.0,0.0,multi_armed_bandit,BatchRacing
+191,1524,0.0,0.0,multi_armed_bandit,BatchRacing
+138,1100,0.0,0.0,multi_armed_bandit,BatchRacing
+235,1876,0.0,0.0,multi_armed_bandit,BatchRacing
+161,1284,0.0,0.0,multi_armed_bandit,BatchRacing
+238,1900,0.0,0.0,multi_armed_bandit,BatchRacing
+241,1924,0.0,0.0,multi_armed_bandit,BatchRacing
+146,1164,0.0,0.0,multi_armed_bandit,BatchRacing
+217,1732,0.0,0.0,multi_armed_bandit,BatchRacing
+256,2044,0.0,0.0,multi_armed_bandit,BatchRacing
+250,1996,0.0,0.0,multi_armed_bandit,BatchRacing
+259,2068,0.0,0.0,multi_armed_bandit,BatchRacing
+237,1892,0.0,0.0,multi_armed_bandit,BatchRacing
+204,1628,0.0,0.0,multi_armed_bandit,BatchRacing
+314,2508,0.0,0.0,multi_armed_bandit,BatchRacing
+197,1572,0.0,0.0,multi_armed_bandit,BatchRacing
+277,2212,0.0,0.0,multi_armed_bandit,BatchRacing
+248,1980,0.0,0.0,multi_armed_bandit,BatchRacing
+223,1780,0.0,0.0,multi_armed_bandit,BatchRacing
+317,2532,0.0,0.0,multi_armed_bandit,BatchRacing
+212,1692,0.0,0.0,multi_armed_bandit,BatchRacing
+223,1780,0.0,0.0,multi_armed_bandit,BatchRacing
+145,1156,0.0,0.0,multi_armed_bandit,BatchRacing
+178,1420,0.0,0.0,multi_armed_bandit,BatchRacing
+267,2132,0.0,0.0,multi_armed_bandit,BatchRacing
+232,1852,0.0,0.0,multi_armed_bandit,BatchRacing
+279,2228,0.0,0.0,multi_armed_bandit,BatchRacing
+276,2204,0.0,0.0,multi_armed_bandit,BatchRacing
+335,2676,0.0,0.0,multi_armed_bandit,BatchRacing
+219,1748,0.0,0.0,multi_armed_bandit,BatchRacing
+270,2156,0.0,0.0,multi_armed_bandit,BatchRacing
+313,2500,0.0,0.0,multi_armed_bandit,BatchRacing
+249,1988,0.0,0.0,multi_armed_bandit,BatchRacing
+297,2372,0.0,0.0,multi_armed_bandit,BatchRacing
+264,2108,0.0,0.0,multi_armed_bandit,BatchRacing
+253,2020,0.0,0.0,multi_armed_bandit,BatchRacing
+274,2188,0.0,0.0,multi_armed_bandit,BatchRacing
+237,1892,0.0,0.0,multi_armed_bandit,BatchRacing
+278,2220,0.0,0.0,multi_armed_bandit,BatchRacing
+322,2572,0.0,0.0,multi_armed_bandit,BatchRacing
+313,2500,0.0,0.0,multi_armed_bandit,BatchRacing
+268,2140,0.0,0.0,multi_armed_bandit,BatchRacing
+275,2196,0.0,0.0,multi_armed_bandit,BatchRacing
+264,2108,0.0,0.0,multi_armed_bandit,BatchRacing
+273,2180,0.0,0.0,multi_armed_bandit,BatchRacing
+193,1540,0.0,0.0,multi_armed_bandit,BatchRacing
+206,1644,0.0,0.0,multi_armed_bandit,BatchRacing
+425,3396,0.0,0.0,multi_armed_bandit,BatchRacing
+164,1308,0.0,0.0,multi_armed_bandit,BatchRacing
+323,2580,0.0,0.0,multi_armed_bandit,BatchRacing
+306,2444,0.0,0.0,multi_armed_bandit,BatchRacing
+411,3284,0.0,0.0,multi_armed_bandit,BatchRacing
+376,3004,0.0,0.0,multi_armed_bandit,BatchRacing
+153,1220,0.0,0.0,multi_armed_bandit,BatchRacing
+209,1668,0.0,0.0,multi_armed_bandit,BatchRacing
+197,1572,0.0,0.0,multi_armed_bandit,BatchRacing
+292,2332,0.0,0.0,multi_armed_bandit,BatchRacing
+281,2244,0.0,0.0,multi_armed_bandit,BatchRacing
+338,2700,0.0,0.0,multi_armed_bandit,BatchRacing
+321,2564,0.0,0.0,multi_armed_bandit,BatchRacing
+282,2252,0.0,0.0,multi_armed_bandit,BatchRacing
+241,1924,0.0,0.0,multi_armed_bandit,BatchRacing
+322,2572,0.0,0.0,multi_armed_bandit,BatchRacing
+208,1660,0.0,0.0,multi_armed_bandit,BatchRacing
+358,2860,0.0,0.0,multi_armed_bandit,BatchRacing
+352,2812,0.0,0.0,multi_armed_bandit,BatchRacing
+205,1636,0.0,0.0,multi_armed_bandit,BatchRacing
+248,1980,0.0,0.0,multi_armed_bandit,BatchRacing
+441,3524,0.0,0.0,multi_armed_bandit,BatchRacing
+250,1996,0.0,0.0,multi_armed_bandit,BatchRacing
+370,2956,0.0,0.0,multi_armed_bandit,BatchRacing
+341,2724,0.0,0.0,multi_armed_bandit,BatchRacing
+374,2988,0.0,0.0,multi_armed_bandit,BatchRacing
+215,1716,0.0,0.0,multi_armed_bandit,BatchRacing
+231,1844,0.0,0.0,multi_armed_bandit,BatchRacing
+235,1876,0.0,0.0,multi_armed_bandit,BatchRacing
+238,1900,0.0,0.0,multi_armed_bandit,BatchRacing
+261,2084,0.0,0.0,multi_armed_bandit,BatchRacing
+246,1964,0.0,0.0,multi_armed_bandit,BatchRacing
+455,3636,0.0,0.0,multi_armed_bandit,BatchRacing
+338,2700,0.0,0.0,multi_armed_bandit,BatchRacing
+335,2676,0.0,0.0,multi_armed_bandit,BatchRacing
+292,2332,0.0,0.0,multi_armed_bandit,BatchRacing
+320,2556,0.0,0.0,multi_armed_bandit,BatchRacing
+13,104,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+27,216,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+20,160,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+20,160,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+18,144,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+30,240,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+67,536,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+46,368,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+34,272,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+32,256,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+36,288,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+48,384,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+27,216,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+46,368,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+170,1360,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+132,1056,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+87,696,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+93,744,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+55,440,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+33,264,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+165,1320,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+52,416,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+23,184,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+99,792,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+183,1464,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+36,288,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+104,832,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+239,1912,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+173,1384,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+385,3080,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+111,888,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+244,1952,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+83,664,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+285,2280,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+137,1096,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+80,640,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+385,3080,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+141,1128,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+112,896,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+303,2424,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+266,2128,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+204,1632,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+164,1312,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+272,2176,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+132,1056,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+150,1200,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+110,880,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+449,3592,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+28,224,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+121,968,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+441,3528,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+264,2112,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+30,240,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+42,336,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+164,1312,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+202,1616,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+99,792,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+152,1216,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+79,632,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+671,5368,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+209,1672,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+394,3152,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+621,4968,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+806,6448,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+516,4128,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+803,6424,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+885,7080,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+125,1000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+925,7400,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+1212,9696,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+250,2000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+1374,10992,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+1878,15024,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+1436,11488,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,1.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,1.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,1.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+6250,50000,0.0,0.0,multi_armed_bandit,Batch Track and stop C-Tracking
+640,642,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+426,428,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+218,220,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+597,599,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+405,407,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+304,306,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+197,199,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+352,354,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+730,732,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+394,396,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+234,236,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+597,599,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+309,311,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+325,327,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+650,652,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+293,295,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+394,396,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+378,380,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+709,711,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+736,738,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+389,391,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+400,402,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+346,348,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+229,231,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+197,199,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+469,471,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+800,802,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+565,567,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+229,231,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+512,514,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+864,866,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+117,119,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+421,423,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+154,156,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+917,919,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+506,508,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+229,231,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+186,188,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+842,844,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+496,498,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+805,807,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+426,428,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+746,748,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+501,503,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+549,551,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+160,162,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+304,306,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1034,1036,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+272,274,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+906,908,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+912,914,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+576,578,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+421,423,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+378,380,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+725,727,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+288,290,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1082,1084,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+992,994,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+453,455,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+341,343,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+549,551,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+304,306,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1354,1356,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+949,951,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+864,866,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+634,636,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+506,508,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+933,935,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+400,402,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+858,860,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+837,839,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+720,722,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+789,791,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+453,455,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+858,860,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1573,1575,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+800,802,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+997,999,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+634,636,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1530,1532,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+602,604,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1573,1575,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+640,642,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+890,892,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1221,1223,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1088,1090,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1717,1719,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+794,796,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1013,1015,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1365,1367,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1386,1388,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+709,711,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1029,1031,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1082,1084,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1818,1820,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+890,892,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1456,1458,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1344,1346,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+2138,2140,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1472,1474,0.0,0.0,multi_armed_bandit,Heuristic lilUCB

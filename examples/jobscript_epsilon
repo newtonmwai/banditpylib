@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-#SBATCH -A SNIC2021-7-92  -p alvis
-#SBATCH -t 7-00:00:00
-#SBATCH --gpus-per-node=V100:1
-
-module load GCC/8.3.0 CUDA/10.1.243 OpenMPI/3.1.4 PyTorch/1.4.0-Python-3.7.4 torchvision/0.7.0-Python-3.7.4-PyTorch-1.6.0 IPython scikit-learn Seaborn/0.11.1-Python-3.7.4
-
-python run_experiments_epsilon.py

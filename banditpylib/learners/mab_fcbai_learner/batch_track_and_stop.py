@@ -65,6 +65,42 @@ class BatchTrackAndStop(MABFixedConfidenceBAILearner):
         projection = projection / np.sum(projection)
         return projection
 
+    def linf_projection(self, w_star):
+        # Clip the values of w to the interval [epsilon, 1]
+        epsilon = (self.arm_num**2 + self.__total_pulls) ** (
+            -1 / 2
+        )  # Compute epsilon
+
+        w_proj = np.clip(w_star, epsilon, 1)
+
+        # Calculate discrepancy
+        discrepancy = 1 - np.sum(w_proj)
+
+        # While we have a discrepancy to distribute
+        while (
+            abs(discrepancy) > 1e-8
+        ):  # A small threshold to prevent endless loop due to floating point errors
+            # Find components that can be adjusted
+            adjustable_indices = np.where(
+                (w_proj > epsilon) & (w_proj + discrepancy / self.arm_num > epsilon)
+            )[0]
+
+            if len(adjustable_indices) == 0:
+                # If no components can be adjusted, distribute discrepancy equally and break
+                w_proj += discrepancy / self.arm_num
+                break
+
+            # Calculate amount to distribute per adjustable component
+            per_component_discrepancy = discrepancy / len(adjustable_indices)
+
+            # Distribute among the adjustable components
+            w_proj[adjustable_indices] += per_component_discrepancy
+
+            # Recalculate discrepancy
+            discrepancy = 1 - np.sum(w_proj)
+
+        return w_proj
+
     def clip_values(self, w_star, threshold=0.05):
         w_star = np.where(np.array(w_star) < threshold, 0, w_star)
         return w_star / np.sum(w_star)
@@ -122,6 +158,7 @@ class BatchTrackAndStop(MABFixedConfidenceBAILearner):
             # Compute w for the given y
             w = np.array([self.xa(y, mu, a) for a in range(self.arm_num)]).squeeze()
             w_normalized = np.array(w) / sum(w)
+            w_normalized_Na_t = w_normalized * self.batch_size - np.array(self.__Na_t)
 
             # Original objective
             original_obj = np.abs(self.F_mu(y, mu) - 1)
@@ -131,7 +168,12 @@ class BatchTrackAndStop(MABFixedConfidenceBAILearner):
 
             # L1 sparsity penalty with rho scaling
             # We exponentiate rho to make the penalty extremely large as rho approaches 1
-            l1_penalty = (10 ** ((self.rho * 10) - 1)) * np.sum(np.abs(w_normalized))
+            l1_penalty = self.rho * np.linalg.norm(np.abs(w_normalized_Na_t), ord=1)
+
+            # l-0 norm penalty
+            # l0_penalty = self.rho * np.count_nonzero(
+            #     w_normalized
+            # )  # (10 ** ((self.rho * 10) - 1))
 
             return original_obj + l1_penalty
 
@@ -263,8 +305,8 @@ class BatchTrackAndStop(MABFixedConfidenceBAILearner):
             w_star = self.solve_wstar(self.mu_hat)
 
             # if self.__total_pulls == 0:
-            # print("w_star: ", w_star)
-            w_star = self.clip_values(w_star)
+            print("w_star: ", w_star)
+            # w_star = self.clip_values(w_star)
             # print("Clipped w_star: ", w_star)
 
             # inf_wstar = self.l_inf_projection(w_star)
@@ -272,7 +314,7 @@ class BatchTrackAndStop(MABFixedConfidenceBAILearner):
             # print("inf_w_star: ", inf_wstar)
 
             __arm_pulls = self.arm_pulls(w_star)
-            # print("Arm pulls: ", __arm_pulls)
+            print("Arm pulls: ", __arm_pulls, "\n")
 
             for __arm, __pulls in enumerate(__arm_pulls):
                 arm_pull = actions.arm_pulls.add()
