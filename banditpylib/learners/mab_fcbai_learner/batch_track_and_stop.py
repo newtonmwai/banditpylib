@@ -1,14 +1,17 @@
 from typing import Optional
 
 import numpy as np
+import pickle
+from datetime import datetime
 from scipy.optimize import minimize
-
 
 from banditpylib import (
     argmax_or_min_tuple,
     subtract_tuple_lists,
     kl_divergence,
+    k_largest_indices,
 )
+
 from banditpylib.arms import PseudoArm
 from banditpylib.data_pb2 import Context, Actions, Feedback
 from .utils import MABFixedConfidenceBAILearner
@@ -25,19 +28,26 @@ class BatchTrackAndStop(MABFixedConfidenceBAILearner):
         self,
         arm_num: int,
         confidence: float,
-        rho: float,
         batch_size: int,
         max_pulls: int = 1000,
-        tracking_rule: str = "C",
+        num_switches=1,
+        gamma: float = 0.5,
         name: Optional[str] = None,
     ):
         super().__init__(arm_num=arm_num, confidence=confidence, name=name)
-        self.tracking_rule = tracking_rule
         self.__max_pulls = max_pulls
-        self.rho = rho
+        # self.__rho = rho
         self.batch_size = batch_size
-        self.__eps = 1e-32
-        self.__eps_ = 1e32
+        self.__eps = 1e-16
+        self.__sparsity_eps = 1e-5
+        self.num_switches = num_switches
+        self.desired_sparsity = 1 - ((1.0 + num_switches) / self.arm_num)
+        self.max_iterations = 10
+        # self.rho = rho
+        # self.__rho = rho
+        self.gamma = gamma
+
+        self.sparsity = []
 
     def _name(self) -> str:
         return "track_and_stop"
@@ -55,6 +65,7 @@ class BatchTrackAndStop(MABFixedConfidenceBAILearner):
         )
         self.Na_t = [(0, arm_id) for arm_id in range(self.arm_num)]
         self.__Na_t = list(np.zeros(self.arm_num))
+        self.sparsity = []
 
     # L∞ projection of w_star onto Σ_K with ε = (K^2 + t)^(-1/2)
     def l_inf_projection(self, w_star):
@@ -105,96 +116,117 @@ class BatchTrackAndStop(MABFixedConfidenceBAILearner):
         w_star = np.where(np.array(w_star) < threshold, 0, w_star)
         return w_star / np.sum(w_star)
 
-    # Define the function ga(x)
-    def ga(self, x, mu, a):
-        return kl_divergence(
-            mu[self.__best_arm_id], (mu[self.__best_arm_id] + (x * mu[a])) / (1 + x)
-        ) + x * kl_divergence(mu[a], (mu[self.__best_arm_id] + (x * mu[a])) / (1 + x))
-
-    # Approximate numerically the inverse function of ga(y)
-    def xa(self, y, mu, a):
-        def objective(x):
-            return np.abs(self.ga(x, mu, a) - y)
-
-        bounds = [(0, None)]  # kl_divergence(mu[self.__best_arm_id], mu[a])
-        result = 1
-        if a != self.__best_arm_id:
-            result = minimize(
-                objective,
-                x0=0.5 * kl_divergence(mu[self.__best_arm_id], mu[a]),
-                bounds=bounds,
-                method="SLSQP",  # or method="L-BFGS-B", method='trust-constr' or method="SLSQP"
-            ).x[0]
-        return result
-
-    # Compute F_mu(y)
-    def F_mu(self, y, mu):
-        return sum(
-            [
-                (
-                    kl_divergence(
-                        mu[self.__best_arm_id],
-                        (
-                            (mu[self.__best_arm_id] + self.xa(y, mu, a) * mu[a])
-                            / (1 + self.xa(y, mu, a))
-                        ),
-                    )
-                    / kl_divergence(
-                        mu[a],
-                        (
-                            (mu[self.__best_arm_id] + self.xa(y, mu, a) * mu[a])
-                            / (1 + self.xa(y, mu, a))
-                        ),
-                    )
-                )
-                for a in [
-                    idx for idx in range(self.arm_num) if idx != self.__best_arm_id
-                ]
-            ]
+    def ucb(self, arm_id):
+        return np.sqrt(
+            2 * np.log(self.__total_pulls) / (self.__Na_t[arm_id] + self.__eps)
         )
+
+    # Define I_alpha
+    def I_alpha(self, alpha, mu1, mu2):
+        term1 = alpha * kl_divergence(mu1, alpha * mu1 + (1 - alpha) * mu2)
+        term2 = (1 - alpha) * kl_divergence(mu2, alpha * mu1 + (1 - alpha) * mu2)
+        return term1 + term2
 
     def solve_wstar(self, mu):
-        def objective(y):
-            # Compute w for the given y
-            w = np.array([self.xa(y, mu, a) for a in range(self.arm_num)]).squeeze()
-            w_normalized = np.array(w) / sum(w)
-            w_normalized_Na_t = w_normalized * self.batch_size - np.array(self.__Na_t)
+        """
+        Solve for the optimal weights given mu values while achieving a desired sparsity level.
 
-            # Original objective
-            original_obj = np.abs(self.F_mu(y, mu) - 1)
+        Parameters:
+        - mu: list of expected reward values for each arm.
+        - desired_sparsity: Target sparsity level for the weights.
 
-            # L1 sparsity penalty
-            # l1_penalty = self.rho * np.sum(np.abs(w_normalized))
+        Returns:
+        - optimal weights array.
+        """
 
-            # L1 sparsity penalty with rho scaling
-            # We exponentiate rho to make the penalty extremely large as rho approaches 1
-            l1_penalty = self.rho * np.linalg.norm(np.abs(w_normalized_Na_t), ord=1)
+        def objective(params, mu):
+            w = params[:-1]
+            r = params[-1]
+            terms = [
+                (w[self.__best_arm_id] + w[i])
+                * self.I_alpha(
+                    w[self.__best_arm_id] / (w[self.__best_arm_id] + w[i]),
+                    mu[self.__best_arm_id] + self.ucb(self.__best_arm_id),
+                    mu[i] + self.ucb(i),
+                )
+                for i in range(len(w))
+                if i != self.__best_arm_id
+            ]
+            return -min(terms) + r
 
-            # l-0 norm penalty
-            # l0_penalty = self.rho * np.count_nonzero(
-            #     w_normalized
-            # )  # (10 ** ((self.rho * 10) - 1))
+        def constraint1(params):
+            w = params[:-1]
+            return np.sum(w) - 1
 
-            return original_obj + l1_penalty
+        def constraint2(params, a):
+            w = params[:-1]
+            r = params[-1]
+            return w[a] - self.__gamma / r
 
-        bounds = [
-            (0, kl_divergence(mu[self.__best_arm_id], mu[self.__second_best_arm_id]))
-        ]
+        # Callback function
+        def adjust_gamma(params):
+            w = params[:-1]
+            # Measure the sparsity
+            sparsity = (
+                np.sum(np.array([1.0 for _w in w if _w < self.__sparsity_eps]))
+                / self.arm_num
+            )
+            if sparsity < self.desired_sparsity:
+                self.__gamma *= 1.1
 
-        result = minimize(
-            objective,
-            x0=kl_divergence(mu[self.__best_arm_id], mu[self.__second_best_arm_id]) / 2,
-            bounds=bounds,
-            method="SLSQP",
-        )
+        best_weights = None
+        best_sparsity = 0
 
-        y_star = result.x[0]
-        w_star = np.array(
-            [self.xa(y_star, mu, a) for a in range(self.arm_num)]
-        ).squeeze()
-        w_star = np.array(w_star) / sum(w_star)
+        w0 = np.ones(self.arm_num) / self.arm_num
+        r0 = 1
+        initial_guess = np.append(w0, r0)
 
-        return w_star
+        w_values = np.zeros((self.arm_num, w0.shape[0]))
+        fx_values = np.zeros((self.arm_num))
+
+        for a in range(self.arm_num):
+            self.__gamma = self.gamma
+            constraints = [
+                {"type": "eq", "fun": constraint1},
+                {"type": "ineq", "fun": constraint2, "args": (a,)},
+            ]
+            bounds = [(0, 1) for _ in range(self.arm_num)] + [(0, None)]
+
+            result = minimize(
+                objective,
+                initial_guess,
+                args=(mu,),
+                constraints=constraints,
+                bounds=bounds,
+                method="SLSQP",
+                callback=adjust_gamma,
+            )
+
+            if result.success:
+                # print("Success ")
+                w_values[a] = result.x[:-1]  # Save weights
+                fx_values[a] = result.fun  # Save objective function value
+            else:
+                w_values[a] = w0
+                fx_values[a] = np.inf
+
+        # find index of minimum objective function value
+        min_index = np.argmin(fx_values)
+        # print("fx_values: ", fx_values)
+        # print("w_values: ", w_values)
+        best_weights = w_values[min_index]
+        best_sparsity = np.mean(best_weights < self.__sparsity_eps)
+        # print("Target sparsity: ", self.desired_sparsity)
+        # print("Best sparsity: ", best_sparsity)
+        # print("gamma: ", self.__gamma)
+
+        # If optimization didn't succeed for any arm, return the initial weights (equal distribution)
+        # if best_weights is None:
+        #     print("Failure ")
+        #     return w0
+        # else:
+        #     print("Success ")
+        return best_weights
 
     def beta(self):
         """Computes Threshold β(t, δ) = log((log(t) + 1)/δ)"""
@@ -255,87 +287,35 @@ class BatchTrackAndStop(MABFixedConfidenceBAILearner):
         return np.min(np.array(__Z_a_b)) > __beta
 
     def actions(self, context: Context) -> Actions:
-        if self.tracking_rule == "D":
+        # print("Total Arm pulls: ", self.__Na_t)
+        actions = Actions()
+        w_star = self.solve_wstar(self.mu_hat)
+        # __sparsity = (
+        #     np.sum(np.array([1.0 for _w in w_star if _w < 1e-3])) / self.arm_num
+        # )
+        # self.sparsity.append(__sparsity)
 
-            if self.__stage == "initialization":
-                # print("Initialization")
-                actions = Actions()
-                for arm_id in range(self.arm_num):
-                    # print("Pulling arm ", arm_id)
-                    arm_pull = actions.arm_pulls.add()
-                    arm_pull.arm.id = arm_id
-                    arm_pull.times = 1
-                return actions
+        if self.__stop or self.__total_pulls >= self.__max_pulls:
+            # print("Final w_star: ", w_star)
+            self.save_sparsity_to_file()
+            return actions
 
-            self.__stage == "main"
-            actions = Actions()
+        __arm_pulls = self.arm_pulls(w_star)
 
-            # Repeat until stopping condition is met
-            if self.__stop or self.__total_pulls >= self.__max_pulls:
-                return actions
+        __sparsity = (
+            np.sum(np.array([1.0 for a in __arm_pulls if a == 0])) / self.arm_num
+        )
+        self.sparsity.append(__sparsity)
 
-            # Forced exploration (if Ut ≠ ∅)
-            if len(self.__U_t) > 0:
-                arm_pull = actions.arm_pulls.add()
-                arm_pull.arm.id = argmax_or_min_tuple(self.__U_t, True)
-                arm_pull.times = 1
-                return actions
+        # print("w_star: ", w_star)
+        # print("Arm pulls: ", __arm_pulls)
+        # print("Total Arm pulls: ", self.__Na_t, "\n")
 
-            # Compute w_star
-            w_star = self.solve_wstar(self.mu_hat)
-            # print("w_star: ", w_star)
-
-            # Pull an arm according to the tracking rule
-            t_wstar = [(self.__total_pulls * w_star[a], a) for a in range(self.arm_num)]
-
-            arm_id = argmax_or_min_tuple(subtract_tuple_lists(t_wstar, self.Na_t))
+        for __arm, __pulls in enumerate(__arm_pulls):
             arm_pull = actions.arm_pulls.add()
-            arm_pull.arm.id = arm_id
-            arm_pull.times = 1
-
-            return actions
-
-        elif self.tracking_rule == "C":
-            actions = Actions()
-
-            if self.__stop or self.__total_pulls >= self.__max_pulls:
-                return actions
-
-            # Compute w_star
-            w_star = self.solve_wstar(self.mu_hat)
-
-            # if self.__total_pulls == 0:
-            print("w_star: ", w_star)
-            # w_star = self.clip_values(w_star)
-            # print("Clipped w_star: ", w_star)
-
-            # inf_wstar = self.l_inf_projection(w_star)
-            # inf_wstar = [(inf_wstar[a], a) for a in range(self.arm_num)]
-            # print("inf_w_star: ", inf_wstar)
-
-            __arm_pulls = self.arm_pulls(w_star)
-            print("Arm pulls: ", __arm_pulls, "\n")
-
-            for __arm, __pulls in enumerate(__arm_pulls):
-                arm_pull = actions.arm_pulls.add()
-                arm_pull.arm.id = __arm
-                arm_pull.times = __pulls
-            return actions
-
-            # if self.__total_pulls == 0:
-            #     self.__inf_wstar = inf_wstar
-            # else:
-            #     self.__inf_wstar = add_tuple_lists(self.__inf_wstar, inf_wstar)
-
-            # arm_id = argmax_or_min_tuple(
-            #     subtract_tuple_lists(self.__inf_wstar, self.Na_t)
-            # )
-
-            # arm_pull = actions.arm_pulls.add()
-            # arm_pull.arm.id = arm_id
-            # arm_pull.times = 1
-
-            # return actions
+            arm_pull.arm.id = __arm
+            arm_pull.times = __pulls
+        return actions
 
     def update(self, feedback: Feedback):
         for arm_feedback in feedback.arm_feedbacks:
@@ -360,19 +340,20 @@ class BatchTrackAndStop(MABFixedConfidenceBAILearner):
             for (arm_id, pseudo_arm) in enumerate(self.__pseudo_arms)
         ]
 
-        self.__Na_t = [
-            self.__pseudo_arms[arm_id].total_pulls for arm_id in range(self.arm_num)
-        ]
+        self.__Na_t = np.array(
+            [self.__pseudo_arms[arm_id].total_pulls for arm_id in range(self.arm_num)]
+        )
 
-        self.__U_t = []
-        for arm_id in range(self.arm_num):
-            if self.__pseudo_arms[arm_id].total_pulls < (
-                np.sqrt(self.__total_pulls) - self.arm_num / 2
-            ):
-                self.__U_t = [
-                    (pseudo_arm.total_pulls, __arm_id)
-                    for (__arm_id, pseudo_arm) in enumerate(self.__pseudo_arms)
-                ]
+        # self.__U_t = []
+        # for arm_id in range(self.arm_num):
+        #     if self.__pseudo_arms[arm_id].total_pulls < (
+        #         np.sqrt(self.__total_pulls) - self.arm_num / 2
+        #     ):
+        #         self.__U_t = [
+        #             (pseudo_arm.total_pulls, __arm_id)
+        #             for (__arm_id, pseudo_arm) in enumerate(self.__pseudo_arms)
+        #         ]
+
         self.__stop = self.stop()
 
         if self.__stage == "initialization":
@@ -394,3 +375,22 @@ class BatchTrackAndStop(MABFixedConfidenceBAILearner):
                 if arm_id != best_arm_id
             ]
         )
+
+    def save_sparsity_to_file(self):
+        # Get the current timestamp and format it
+        current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        dat = (
+            "gamma_"
+            + str(self.gamma)
+            + "_batch_size_"
+            + str(self.batch_size)
+            + "num_switches_"
+            + str(self.num_switches)
+            + "_"
+            + current_time
+        )
+        filename = f"csv_files/data_{dat}.pkl"
+
+        # Write the list to a file using pickle with timestamp in filename
+        with open(filename, "wb") as file:
+            pickle.dump(self.sparsity, file)

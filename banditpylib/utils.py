@@ -201,3 +201,14 @@ def round_robin(A, T, b, r):
 
     # print("a", a)
     return list(a.items())
+
+
+def k_largest_indices(arr, k):
+    """Return the indices of the k largest items in a numpy array."""
+    # Use numpy's argpartition for efficiency
+    # This partitions the array in such a way that the kth largest value is in its final sorted position
+    # Values to the left of this position are smaller, and those to its right are larger
+    partitioned_indices = np.argpartition(-arr, k)[:k]
+
+    # Since argpartition doesn't guarantee the order of the values, we sort the resulting indices
+    return partitioned_indices[np.argsort(-arr[partitioned_indices])]

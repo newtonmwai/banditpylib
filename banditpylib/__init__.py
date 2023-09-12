@@ -10,4 +10,5 @@ __all__ = [
     "remove_array_item_",
     "remove_tuple_item_",
     "round_robin",
+    "k_largest_indices",
 ]

@@ -141,6 +141,87 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
             ]
         )
 
+    # Define I_alpha
+    def I_alpha(self, alpha, mu1, mu2):
+        term1 = alpha * kl_divergence(mu1, alpha * mu1 + (1 - alpha) * mu2)
+        term2 = (1 - alpha) * kl_divergence(mu2, alpha * mu1 + (1 - alpha) * mu2)
+        return term1 + term2
+
+    def solve_wstar_full(self, mu):
+        """
+        Solve for the optimal weights given mu values.
+
+        Parameters:
+        - mu: list of expected reward values for each arm.
+
+        Returns:
+        - optimal weights array.
+        """
+
+        # Objective function to be minimized
+        def objective(w, mu):
+            """
+            Objective function to maximize based on the given problem.
+
+            Parameters:
+            - w: weights array.
+            - mu: list of expected reward values for each arm.
+
+            Returns:
+            - negative of minimum value based on the provided equation.
+            """
+
+            # Compute the list of terms based on the provided equation
+            terms = [
+                (w[self.__best_arm_id] + w[i])
+                * self.I_alpha(
+                    w[self.__best_arm_id] / (w[self.__best_arm_id] + w[i]),
+                    mu[self.__best_arm_id],
+                    mu[i],
+                )
+                for i in range(len(w))
+                if i != self.__best_arm_id
+            ]
+
+            # Return the negative of the minimum term to convert to max problem
+            return -min(terms)
+
+        # Constraint: Weights should sum up to 1
+        def constraint1(w):
+            """
+            Constraint function to ensure the sum of weights equals 1.
+
+            Parameters:
+            - w: weights array.
+
+            Returns:
+            - 1 minus sum of weights.
+            """
+
+            return 1.0 - np.sum(w)
+
+        # Initial weights: Equal distribution across all arms
+        w0 = np.ones(self.arm_num) / self.arm_num
+
+        # Defining constraints and bounds for optimization
+        constraints = {"type": "eq", "fun": constraint1}
+        bounds = [(0, 1) for _ in range(self.arm_num)]
+
+        # Optimize using SLSQP method
+        result = minimize(
+            objective,
+            w0,
+            args=(mu,),
+            bounds=bounds,
+            constraints=constraints,
+            method="SLSQP",
+        )
+
+        # Extract the optimal weights and store it in the instance variable
+        self.__wstar = np.array(result.x)
+
+        return self.__wstar
+
     def solve_wstar(self, mu):
         def objective(y):
             return np.abs(self.F_mu(y, mu) - 1)
@@ -164,43 +245,6 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
 
         w_star = np.array(w_star) / sum(w_star)
         # print("w_star: ", w_star)
-
-        return w_star
-
-    def solve_wstar_with_penalty(self, mu, rho=0.0):
-        def objective(y):
-            # Compute w for the given y
-            w = np.array([self.xa(y, mu, a) for a in range(self.arm_num)]).squeeze()
-            w_normalized = np.array(w) / sum(w)
-
-            # Original objective
-            original_obj = np.abs(self.F_mu(y, mu) - 1)
-
-            # L1 sparsity penalty
-            l1_penalty = rho * np.sum(np.abs(w_normalized))
-
-            # L1 sparsity penalty with rho scaling
-            # We exponentiate rho to make the penalty extremely large as rho approaches 1
-            l1_penalty = (10 ** ((rho * 10) - 1)) * np.sum(np.abs(w_normalized))
-
-            return original_obj + l1_penalty
-
-        bounds = [
-            (0, kl_divergence(mu[self.__best_arm_id], mu[self.__second_best_arm_id]))
-        ]
-
-        result = minimize(
-            objective,
-            x0=kl_divergence(mu[self.__best_arm_id], mu[self.__second_best_arm_id]) / 2,
-            bounds=bounds,
-            method="SLSQP",
-        )
-
-        y_star = result.x[0]
-        w_star = np.array(
-            [self.xa(y_star, mu, a) for a in range(self.arm_num)]
-        ).squeeze()
-        w_star = np.array(w_star) / sum(w_star)
 
         return w_star
 
@@ -242,7 +286,7 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
         """Stop the algorithm if the stopping condition is satisfied"""
         __Z_a_b = self.Z_a_b()
         __beta = self.beta()
-        
+
         # print("Z_a_b: ", __Z_a_b)
         # print("Beta: ", __beta)
         return np.min(np.array(__Z_a_b)) > __beta
@@ -265,6 +309,7 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
 
             # Repeat until stopping condition is met
             if self.__stop or self.__total_pulls >= self.__max_pulls:
+                print("Final w_star: ", self.__wstar)
                 return actions
 
             # Forced exploration (if Ut ≠ ∅)
@@ -275,8 +320,9 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
                 return actions
 
             # Compute w_star
-            w_star = self.solve_wstar(self.mu_hat)
-            # print("w_star: ", w_star)
+            # w_star = self.solve_wstar(self.mu_hat)
+            w_star = self.solve_wstar_full(self.mu_hat)
+            # print("w_star: ", w_star, "\n")
 
             # Pull an arm according to the tracking rule
             t_wstar = [(self.__total_pulls * w_star[a], a) for a in range(self.arm_num)]
@@ -292,10 +338,12 @@ class TrackAndStop(MABFixedConfidenceBAILearner):
             actions = Actions()
 
             if self.__stop or self.__total_pulls >= self.__max_pulls:
+                print("Final w_star: ", self.__wstar)
                 return actions
 
             # Compute w_star
-            w_star = self.solve_wstar(self.mu_hat)
+            # w_star = self.solve_wstar(self.mu_hat)
+            w_star = self.solve_wstar_full(self.mu_hat)
             # if self.__total_pulls == 0:
             # print("w_star: ", w_star)
 
