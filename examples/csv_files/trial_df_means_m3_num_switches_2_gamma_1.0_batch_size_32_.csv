@@ -1,0 +1,21 @@
+rounds,total_actions,regret,other,bandit,learner
+1563,50016,1.0,0.0,multi_armed_bandit,Batched Track and stop
+1563,50016,1.0,0.0,multi_armed_bandit,Batched Track and stop
+1563,50016,1.0,0.0,multi_armed_bandit,Batched Track and stop
+1563,50016,1.0,0.0,multi_armed_bandit,Batched Track and stop
+1563,50016,0.0,0.0,multi_armed_bandit,Batched Track and stop
+1563,50016,1.0,0.0,multi_armed_bandit,Batched Track and stop
+1563,50016,1.0,0.0,multi_armed_bandit,Batched Track and stop
+1563,50016,0.0,0.0,multi_armed_bandit,Batched Track and stop
+1563,50016,1.0,0.0,multi_armed_bandit,Batched Track and stop
+1563,50016,1.0,0.0,multi_armed_bandit,Batched Track and stop
+1272,1279,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1278,1285,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+2243,2250,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+1980,1987,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+2741,2748,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+2201,2208,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+2555,2562,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+2614,2621,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+2672,2679,0.0,0.0,multi_armed_bandit,Heuristic lilUCB
+3254,3261,0.0,0.0,multi_armed_bandit,Heuristic lilUCB

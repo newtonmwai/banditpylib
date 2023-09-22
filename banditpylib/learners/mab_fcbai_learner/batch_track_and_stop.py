@@ -3,7 +3,7 @@ from typing import Optional
 import numpy as np
 import pickle
 from datetime import datetime
-from scipy.optimize import minimize
+from scipy.optimize import minimize, minimize_scalar
 
 from banditpylib import (
     argmax_or_min_tuple,
@@ -39,10 +39,10 @@ class BatchTrackAndStop(MABFixedConfidenceBAILearner):
         # self.__rho = rho
         self.batch_size = batch_size
         self.__eps = 1e-16
-        self.__sparsity_eps = 1e-5
+        self.__sparsity_eps = 1e-3
         self.num_switches = num_switches
         self.desired_sparsity = 1 - ((1.0 + num_switches) / self.arm_num)
-        self.max_iterations = 10
+        self.max_iterations = 1000
         # self.rho = rho
         # self.__rho = rho
         self.gamma = gamma
@@ -158,24 +158,18 @@ class BatchTrackAndStop(MABFixedConfidenceBAILearner):
             w = params[:-1]
             return np.sum(w) - 1
 
-        def constraint2(params, a):
+        def constraint2(params, a, gamma):
             w = params[:-1]
             r = params[-1]
-            return w[a] - self.__gamma / r
+            return w[a] - gamma / r
 
-        # Callback function
-        def adjust_gamma(params):
-            w = params[:-1]
-            # Measure the sparsity
-            sparsity = (
-                np.sum(np.array([1.0 for _w in w if _w < self.__sparsity_eps]))
-                / self.arm_num
-            )
-            if sparsity < self.desired_sparsity:
-                self.__gamma *= 1.1
+        # Define the search range for gamma (e.g., between 0 and 1)
+        gamma_lower = 0.0
+        gamma_upper = 1.0
+        gamma_tolerance = 1e-6  # Tolerance for convergence
 
         best_weights = None
-        best_sparsity = 0
+        best_sparsity = -1
 
         w0 = np.ones(self.arm_num) / self.arm_num
         r0 = 1
@@ -183,49 +177,191 @@ class BatchTrackAndStop(MABFixedConfidenceBAILearner):
 
         w_values = np.zeros((self.arm_num, w0.shape[0]))
         fx_values = np.zeros((self.arm_num))
+        r_values = np.zeros((self.arm_num))
 
-        for a in range(self.arm_num):
-            self.__gamma = self.gamma
-            constraints = [
-                {"type": "eq", "fun": constraint1},
-                {"type": "ineq", "fun": constraint2, "args": (a,)},
-            ]
-            bounds = [(0, 1) for _ in range(self.arm_num)] + [(0, None)]
+        iters = 0
 
-            result = minimize(
-                objective,
-                initial_guess,
-                args=(mu,),
-                constraints=constraints,
-                bounds=bounds,
-                method="SLSQP",
-                callback=adjust_gamma,
+        while best_sparsity != self.desired_sparsity and iters < self.max_iterations:
+            # Perform a binary search for gamma within the specified range
+            gamma = (gamma_lower + gamma_upper) / 2
+
+            for a in range(self.arm_num):
+                bounds = [(0, 1) for _ in range(self.arm_num)] + [(0, None)]
+
+                constraints = [
+                    {"type": "eq", "fun": constraint1},
+                    {
+                        "type": "ineq",
+                        "fun": lambda params, a=a, gamma=gamma: constraint2(
+                            params, a, gamma
+                        ),
+                    },
+                ]
+
+                result = minimize(
+                    lambda params: objective(params, mu),
+                    initial_guess,
+                    constraints=constraints,
+                    bounds=bounds,
+                    method="SLSQP",
+                )
+
+                w = result.x[:-1]
+                r = result.x[-1]
+
+                if result.success:
+                    w_values[a] = w
+                    fx_values[a] = result.fun
+                    r_values[a] = r
+                else:
+                    w_values[a] = w0
+                    fx_values[a] = np.inf
+                    r_values[a] = r0
+
+            min_index = np.argmin(fx_values)
+            best_weights = w_values[min_index]
+            best_r = r_values[min_index]
+            best_sparsity = (
+                np.sum(
+                    np.array([1.0 for _w in best_weights if _w < self.__sparsity_eps])
+                )
+                / self.arm_num
             )
 
-            if result.success:
-                # print("Success ")
-                w_values[a] = result.x[:-1]  # Save weights
-                fx_values[a] = result.fun  # Save objective function value
+            if best_sparsity > self.desired_sparsity:
+                gamma_upper = gamma
             else:
-                w_values[a] = w0
-                fx_values[a] = np.inf
+                gamma_lower = gamma
 
-        # find index of minimum objective function value
-        min_index = np.argmin(fx_values)
-        # print("fx_values: ", fx_values)
-        # print("w_values: ", w_values)
-        best_weights = w_values[min_index]
-        best_sparsity = np.mean(best_weights < self.__sparsity_eps)
-        # print("Target sparsity: ", self.desired_sparsity)
-        # print("Best sparsity: ", best_sparsity)
-        # print("gamma: ", self.__gamma)
+            # Check for convergence based on the tolerance
+            if gamma_upper - gamma_lower < gamma_tolerance:
+                break
 
-        # If optimization didn't succeed for any arm, return the initial weights (equal distribution)
-        # if best_weights is None:
-        #     print("Failure ")
-        #     return w0
-        # else:
-        #     print("Success ")
+            iters += 1
+
+        print("Target sparsity: ", self.desired_sparsity, "Final gamma: ", gamma)
+        return best_weights
+
+    def solve_wstar2(self, mu):
+        """
+        Solve for the optimal weights given mu values while achieving a desired sparsity level.
+
+        Parameters:
+        - mu: list of expected reward values for each arm.
+        - desired_sparsity: Target sparsity level for the weights.
+
+        Returns:
+        - optimal weights array.
+        """
+
+        def objective(params, mu):
+            w = params[:-1]
+            r = params[-1]
+            terms = [
+                (w[self.__best_arm_id] + w[i])
+                * self.I_alpha(
+                    w[self.__best_arm_id] / (w[self.__best_arm_id] + w[i]),
+                    mu[self.__best_arm_id] + self.ucb(self.__best_arm_id),
+                    mu[i] + self.ucb(i),
+                )
+                for i in range(len(w))
+                if i != self.__best_arm_id
+            ]
+            return -min(terms) + r
+
+        def constraint1(params):
+            w = params[:-1]
+            return np.sum(w) - 1
+
+        def constraint2(params, a, gamma):
+            w = params[:-1]
+            r = params[-1]
+            return w[a] - gamma / r
+
+        best_weights = None
+        best_sparsity = -1
+
+        w0 = np.ones(self.arm_num) / self.arm_num
+        r0 = 1
+        initial_guess = np.append(w0, r0)
+
+        w_values = np.zeros((self.arm_num, w0.shape[0]))
+        fx_values = np.zeros((self.arm_num))
+        r_values = np.zeros((self.arm_num))
+
+        iters = 0
+        gamma = self.gamma
+
+        while best_sparsity != self.desired_sparsity and iters < self.max_iterations:
+            # best_sparsity = float("inf")  # Initialize to a high value
+
+            for a in range(self.arm_num):
+                bounds = [(0, 1) for _ in range(self.arm_num)] + [(0, None)]
+
+                # Optimize the weights while keeping gamma constant
+                constraints = [
+                    {"type": "eq", "fun": constraint1},
+                    {
+                        "type": "ineq",
+                        "fun": lambda params, a=a, gamma=gamma: constraint2(
+                            params, a, gamma
+                        ),
+                    },
+                ]
+
+                result = minimize(
+                    lambda params: objective(params, mu),
+                    initial_guess,
+                    constraints=constraints,
+                    bounds=bounds,
+                    method="SLSQP",
+                )
+
+                w = result.x[:-1]
+                r = result.x[-1]
+
+                if result.success:
+                    w_values[a] = w  # Save weights
+                    fx_values[a] = result.fun  # Save objective function value
+                    r_values[a] = r
+                else:
+                    w_values[a] = w0
+                    fx_values[a] = np.inf
+                    r_values[a] = r0
+
+                # # Calculate sparsity
+                # sparsity = (
+                #     np.sum(np.array([1.0 for _w in w if _w < self.__sparsity_eps]))
+                #     / self.arm_num
+                # )
+
+                # if sparsity < best_sparsity:
+                #     best_weights = w
+                #     best_sparsity = sparsity
+
+            # find index of minimum objective function value
+            min_index = np.argmin(fx_values)
+            # print("fx_values: ", fx_values)
+            # print("w_values: ", w_values)
+            best_weights = w_values[min_index]
+            best_r = r_values[min_index]
+            best_sparsity = (
+                np.sum(
+                    np.array([1.0 for _w in best_weights if _w < self.__sparsity_eps])
+                )
+                / self.arm_num
+            )
+            # Optimize gamma using the Newton-Raphson method
+            result2 = minimize_scalar(
+                lambda gamma: objective(np.append(best_weights, best_r), mu),
+                bounds=(0, 1),
+                method="bounded",
+                # options={"xatol": 1e-6, "maxiter": 100},
+            )
+
+            gamma = result2.x
+            iters += 1
+        print("Target sparsity: ", self.desired_sparsity, "Final gamma: ", gamma)
         return best_weights
 
     def beta(self):
@@ -290,10 +426,6 @@ class BatchTrackAndStop(MABFixedConfidenceBAILearner):
         # print("Total Arm pulls: ", self.__Na_t)
         actions = Actions()
         w_star = self.solve_wstar(self.mu_hat)
-        # __sparsity = (
-        #     np.sum(np.array([1.0 for _w in w_star if _w < 1e-3])) / self.arm_num
-        # )
-        # self.sparsity.append(__sparsity)
 
         if self.__stop or self.__total_pulls >= self.__max_pulls:
             # print("Final w_star: ", w_star)
